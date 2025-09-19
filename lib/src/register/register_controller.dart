@@ -15,6 +15,7 @@ class RegisterController {
   Future? init(BuildContext context){
 
     this.context = context;
+    return null;
   }
 
   void register() {
