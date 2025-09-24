@@ -1,4 +1,4 @@
-import 'package:delivery_flutter/src/register/register_controller.dart';
+import 'package:delivery_flutter/src/pages/register/register_controller.dart';
 import 'package:delivery_flutter/src/utils/my_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -186,7 +186,7 @@ class _RegisterPageState extends State<RegisterPage> {
         borderRadius: BorderRadius.circular(30)
       ),
       child: TextField(
-        controller: _con.lastNameController,
+        controller: _con.lastnameController,
         decoration: InputDecoration(
           hintText: 'Apellidos',
           border: InputBorder.none,
