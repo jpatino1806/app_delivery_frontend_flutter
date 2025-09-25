@@ -1,6 +1,7 @@
 import 'package:delivery_flutter/src/models/response_api.dart';
 import 'package:delivery_flutter/src/models/user.dart';
 import 'package:delivery_flutter/src/provider/users_provider.dart';
+import 'package:delivery_flutter/src/utils/my_snackbar.dart';
 import 'package:flutter/material.dart';
 
 class RegisterController {
@@ -32,6 +33,19 @@ class RegisterController {
     String password = passwordController.text.trim();
     String confirmPassword = confirmPasswordController.text.trim();
 
+    if (email.isEmpty || name.isEmpty || lastname.isEmpty || phone.isEmpty ||password.isEmpty || confirmPassword.isEmpty) {
+      MySnackbar.show(context!, 'Debes ingresar todos los campos');
+      return;
+    }
+    if (confirmPassword != password) {
+      MySnackbar.show(context!, 'Las contraseñas no coinciden');
+      return;
+    }
+    if (password.length < 6) {
+      MySnackbar.show(context!, 'La contraseña debe tener al menos 6 caracteres');
+      return;
+    }
+
     User user = User(
       email: email, 
       name: name, 
@@ -45,14 +59,17 @@ class RegisterController {
     );
 
     ResponseApi? responseApi = await usersProvider.create(user);
-    print('RESPUESTA: ${responseApi?.toJson()}');
+
+    MySnackbar.show(context!, responseApi!.message ?? 'Ocurrió un error');
+ 
+    print('RESPUESTA: ${responseApi.toJson()}');
     
-    print(email);
-    print(name);
-    print(lastname);
-    print(phone);
-    print(password);
-    print(confirmPassword);
+    // print(email);
+    // print(name);
+    // print(lastname);
+    // print(phone);
+    // print(password);
+    // print(confirmPassword);
     
 
 
