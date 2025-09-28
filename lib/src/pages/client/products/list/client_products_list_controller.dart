@@ -1,0 +1,18 @@
+import 'package:delivery_flutter/src/utils/shared_pref.dart';
+import 'package:flutter/material.dart';
+
+class ClientProductsListController {
+
+  BuildContext? context;
+  final SharedPref _sharedPref = SharedPref();
+
+  Future? init(BuildContext context){
+    this.context = context;
+    return null;
+
+  }
+
+  logout(BuildContext context){ 
+    _sharedPref.logout(context);
+  }
+}

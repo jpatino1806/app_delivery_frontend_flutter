@@ -1,3 +1,4 @@
+import 'package:delivery_flutter/src/pages/client/products/list/client_products_list_page.dart';
 import 'package:delivery_flutter/src/pages/login/login_page.dart';
 import 'package:delivery_flutter/src/pages/register/register_page.dart';
 import 'package:delivery_flutter/src/utils/my_colors.dart';
@@ -22,6 +23,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         'login': (context) => LoginPage(),
         'register': (context) => RegisterPage(),
+        'client/products/list': (context) => ClientProductsListPage(),
       },
       theme: ThemeData(
         //fontFamily: 'NimbusSans',

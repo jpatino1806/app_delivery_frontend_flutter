@@ -22,7 +22,7 @@ class RegisterController {
 
     this.context = context;
     usersProvider.init(context);
-    return null;
+    //return null;
   }
 
   void register() async{
@@ -51,11 +51,8 @@ class RegisterController {
       name: name, 
       lastname: lastname, 
       phone: phone, 
-      password: password, 
-      //id: '', 
-      image: '', 
-      sesionToken: '', 
-      isAvailable: false
+      password: password, id: '', image: '', sesionToken: '', 
+      
     );
 
     ResponseApi? responseApi = await usersProvider.create(user);
@@ -63,16 +60,12 @@ class RegisterController {
     MySnackbar.show(context!, responseApi!.message ?? 'Ocurrió un error');
  
     print('RESPUESTA: ${responseApi.toJson()}');
-    
-    // print(email);
-    // print(name);
-    // print(lastname);
-    // print(phone);
-    // print(password);
-    // print(confirmPassword);
-    
+  }
 
+  
 
+  void back() {
+    Navigator.pop(context!);
   }
 
 }
