@@ -37,7 +37,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: _circleRegister()),
             Positioned(
               top: 55,
-              left: 28,
+              left: 38,
               child: _textRegister()),
             Positioned(
               top: 43,
@@ -81,10 +81,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _circleRegister(){
     return Container(
-      width: 240,
-      height: 230,
+      width: 260,
+      height: 250,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100),
+        borderRadius: BorderRadius.circular(130),
         color: MyColors.primaryColor
       ),
     );

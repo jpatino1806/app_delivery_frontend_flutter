@@ -39,8 +39,21 @@ class _LoginPageState extends State<LoginPage> {
               left: -100,
               child: _circleLogin()),
             Positioned(
-              top: 60,
-              left: 25,
+              top: 20,
+              left: 10,
+              child: Container(
+                width: 150,
+                height: 150,
+                // decoration: BoxDecoration(
+                //   borderRadius: BorderRadius.circular(130),
+                //   color: Colors.black26
+                // ),
+                child: Image.asset('assets/img/wie_1024_sin_fondo.png'),
+              ),
+            ),  
+            Positioned(
+              top: 160,
+              left: 160,
               child: _textLogin()),
             SingleChildScrollView(
               child: Column(
@@ -65,12 +78,33 @@ class _LoginPageState extends State<LoginPage> {
 
   /////////////////////////////////////////////////////////
   
+  // Widget _imageLogo(){
+  //   return CircleAvatar(
+  //     backgroundImage: AssetImage('assets/img/assets/img/wie_1024.png'),
+  //     radius: 80,
+  //     backgroundColor: Colors.black,
+  //   );
+  // }
+
+  Widget _imageLogo(){
+    return Container(
+      width: 150,
+      height: 150,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(130),
+        color: Colors.black12
+        
+      ),
+      child: Image.asset('assets/img/wie_1024.png'),
+    );
+  }
+
   Widget _circleLogin(){
     return Container(
-      width: 240,
-      height: 230,
+      width: 280,
+      height: 270,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100),
+        borderRadius: BorderRadius.circular(130),
         color: MyColors.primaryColor
       ),
     );
@@ -79,9 +113,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget _textLogin(){
     return Text('LOGIN',
       style: TextStyle(
-        color: Colors.white,
+        color: const Color.fromARGB(255, 200, 15, 15),
         fontWeight: FontWeight.bold,
-        fontSize: 24,
+        fontSize: 34,
         fontFamily: 'NimbusSans'
       ),
     );
@@ -90,8 +124,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget _lottieAnimation(){
     return Container(
       margin: EdgeInsets.only(
-        top: 150, 
-        bottom: MediaQuery.of(context).size.height * 0.17
+        top: 220, 
+        bottom: MediaQuery.of(context).size.height * 0.1
       ),
       child: Lottie.asset('assets/json/Delivery.json',
         width: 350,
