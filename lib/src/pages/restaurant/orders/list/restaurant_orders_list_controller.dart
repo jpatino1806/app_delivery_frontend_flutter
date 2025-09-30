@@ -1,7 +1,7 @@
 import 'package:delivery_flutter/src/utils/shared_pref.dart';
 import 'package:flutter/material.dart';
 
-class ClientProductsListController {
+class RestaurantOrdersListController {
 
   BuildContext? context;
   final SharedPref _sharedPref = SharedPref();
@@ -11,14 +11,14 @@ class ClientProductsListController {
   Future? init(BuildContext context){
     this.context = context;
     return null;
-
+   
   }
 
-  void logout(BuildContext context){ 
+  logout(BuildContext context){ 
     _sharedPref.logout(context);
   }
 
-  void openDrawer(){
+  openDrawer(){
      key.currentState?.openDrawer();
   }
 

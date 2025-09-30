@@ -32,8 +32,7 @@ class _MyAppState extends State<MyApp> {
         'delivery/orders/list': (context) => DeliveryOrdersListPage(),
       },
       theme: ThemeData(
-        //fontFamily: 'NimbusSans',
-        primaryColor: MyColors.primaryColor
+         primaryColor: MyColors.primaryColor
       ),
     );
   }
