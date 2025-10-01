@@ -19,7 +19,7 @@ class _RestaurantOrdersListPageState extends State<RestaurantOrdersListPage> {
 
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      _con.init(context);
+      _con.init(context, refresh);
     });
   }
 
@@ -59,65 +59,73 @@ class _RestaurantOrdersListPageState extends State<RestaurantOrdersListPage> {
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(
-                color: MyColors.primaryColor
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Nombre del cliente',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold
-                  ),
-                  maxLines: 1,
-                ),
-                Text('Email',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.grey[200],
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic
-                  ),
-                  maxLines: 1,
-                ),
-                Text('telefono',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.grey[200],
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic
-                  ),
-                  maxLines: 1,
-                ),
-                Container(
-                  height: 55,
-                  margin: EdgeInsets.only(top: 10),
-                  child: FadeInImage(
-                    placeholder: AssetImage('assets/img/no-image.png'), 
-                    image: AssetImage('assets/img/no-image.png'),
-                      fit: BoxFit.contain,
-                      fadeInDuration: Duration(milliseconds: 50),
-            
-                    ),
-                )
-                ],
-              ),
+            decoration: BoxDecoration(
+              color: MyColors.primaryColor
             ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('${_con.user?.name ?? ''} ${_con.user?.lastname ?? ''}', // '${_con.user?.name ?? ''}'
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold
+                ),
+                maxLines: 1,
+              ),
+              Text(_con.user?.email ?? '',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.grey[200],
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic
+                ),
+                maxLines: 1,
+              ),
+              Text(_con.user?.phone ?? '',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.grey[200],
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic
+                ),
+                maxLines: 1,
+              ),
+              Container(
+                height: 55,
+                margin: EdgeInsets.only(top: 10),
+                child: FadeInImage(
+                  image: (_con.user?.image != null && _con.user!.image!.isNotEmpty)
+                    ? NetworkImage(_con.user!.image!)
+                    : AssetImage('assets/img/no-image.png') as ImageProvider,
+                  fit: BoxFit.contain,
+                  fadeInDuration: Duration(milliseconds: 50),
+                  placeholder: AssetImage('assets/img/no-image.png'),
+                ),
+              )
+              ],
+            ),
+          ),
            
-            ListTile(
-              title: Text('Seleccionar rol'),
-              trailing: Icon(Icons.person_outline),
-            ),
-            ListTile(
-              onTap: () => _con.logout(context),
-              title: Text('Cerrar sesion'),
-              trailing: Icon(Icons.power_settings_new),
-            )
+          _con.user != null ?
+          _con.user!.roles.length > 1 ?
+          ListTile(
+            onTap: () => _con.goToRoles(),
+            title: Text('Seleccionar rol'),
+            trailing: Icon(Icons.person_outline),
+          ) : Container() : Container(),
+          ListTile(
+            onTap: () => _con.logout(context),
+            title: Text('Cerrar sesion'),
+            trailing: Icon(Icons.power_settings_new),
+          )
           ],
         ),
       );
     }
+
+    void refresh(){
+    setState(() {},);
+  }
 
 }

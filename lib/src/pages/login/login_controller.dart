@@ -25,7 +25,6 @@ class LoginController {
     
     
     if (user.sesionToken != null) {
-      //Navigator.pushNamedAndRemoveUntil(context, 'client/products/list', (route) => false);
       if (user.roles.length > 1)  {//si tiene mas de un rol
         Navigator.pushNamedAndRemoveUntil(context, 'roles', (route) => false);
       }else{
