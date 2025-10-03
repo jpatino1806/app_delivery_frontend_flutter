@@ -1,8 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:delivery_flutter/src/models/response_api.dart';
 import 'package:delivery_flutter/src/models/user.dart';
 import 'package:delivery_flutter/src/provider/users_provider.dart';
 import 'package:delivery_flutter/src/utils/my_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 
 class RegisterController {
 
@@ -17,12 +22,23 @@ class RegisterController {
 
   UsersProvider usersProvider = UsersProvider();
 
+  PickedFile? pickedFile;
+  File? imageFile;
+  Function? refresh;
 
-  Future? init(BuildContext context){
+  ProgressDialog? _progressDialog;
+
+  bool isEnable = true;
+
+
+  Future? init(BuildContext context, Function refresh){
 
     this.context = context;
+    this.refresh = refresh;
     usersProvider.init(context);
-   
+    _progressDialog = ProgressDialog(context: context);
+
+    return null;
   }
 
   void register() async{
@@ -46,30 +62,87 @@ class RegisterController {
       return;
     }
 
+    if (imageFile == null) {
+      MySnackbar.show(context!, 'Selecciona una imagen');
+      return;
+    }
+
+    _progressDialog?.show(max: 100, msg: 'espere un momento...');
+    isEnable = false;
+
     User user = User(
       email: email, 
       name: name, 
       lastname: lastname, 
       phone: phone, 
-      password: password, id: '', image: '', sesionToken: '', 
-      
+      password: password //, id: '', image: '', sesionToken: '', 
     );
 
-    ResponseApi? responseApi = await usersProvider.create(user);
+    Stream? stream = await usersProvider.createWithImage(user, imageFile!);
+    stream?.listen((res) {
 
-    MySnackbar.show(context!, responseApi!.message ?? 'Ocurrió un error');
+      _progressDialog?.close();
 
-    if (responseApi.success == true) {
-      Future.delayed(Duration(seconds: 3), () {
-        Navigator.pushReplacementNamed(context!, 'login');
-      });
-    }
-
- 
+    //ResponseApi? responseApi = await usersProvider.create(user);
+    ResponseApi? responseApi = ResponseApi.fromJson(json.decode(res));
     print('RESPUESTA: ${responseApi.toJson()}');
+
+    MySnackbar.show(context!, responseApi.message ?? 'Ocurrió un error');
+
+      if (responseApi.success == true) {
+        Future.delayed(Duration(seconds: 3), () {
+          Navigator.pushReplacementNamed(context!, 'login');
+        });
+      }else{
+        isEnable = true;
+      }
+    });
+
+    
   }
 
-  
+ 
+  Future selectImage(ImageSource imageSource) async {
+  final pickedFile = await ImagePicker().pickImage(source: imageSource); // ✅ Actual
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+    }
+    Navigator.pop(context!);
+    refresh!();
+  }
+
+
+
+  void showAlertDialog(){
+    Widget galleryButton = ElevatedButton(
+      onPressed: () {
+        selectImage(ImageSource.gallery);
+      }, 
+      child: Text('GALERIA')
+    );
+    Widget cameraButton = ElevatedButton(
+      onPressed: () {
+        selectImage(ImageSource.camera);
+      }, 
+      child: Text('CAMARA')
+    );
+
+    AlertDialog alertDialog = AlertDialog(
+      title: Text('Selecciona tu imagen'),
+      actions: [
+        galleryButton,
+        cameraButton
+      ],
+    );
+
+    showDialog(
+      context: context!, 
+      builder: (BuildContext context){
+        return alertDialog;
+      }
+    );
+  }
+
 
   void back() {
     Navigator.pop(context!);

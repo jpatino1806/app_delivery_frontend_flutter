@@ -141,6 +141,7 @@ class _LoginPageState extends State<LoginPage> {
       children: [
         Text('No tienes cuenta?',
           style: TextStyle(
+              fontSize: 17,
               color: MyColors.primaryColor
             ),
         ),
@@ -150,6 +151,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Text('Registrate',
             style: TextStyle(
               fontWeight: FontWeight.bold,
+              fontSize: 17,
               color: MyColors.primaryColor
             ),
           ),

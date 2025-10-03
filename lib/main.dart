@@ -9,7 +9,7 @@ import 'package:delivery_flutter/src/pages/roles/roles_page.dart';
 import 'package:delivery_flutter/src/utils/my_colors.dart';
 import 'package:flutter/material.dart';
 
-//void main() => runApp(const MyApp());
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
 

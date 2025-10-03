@@ -28,21 +28,10 @@ android {
         applicationId = "com.example.delivery_flutter"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 21           //flutter.minSdkVersion
+        minSdk = flutter.minSdkVersion       
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-    }
-
-    dependencies {
-        // Import the Firebase BoM
-        implementation platform('com.google.firebase:firebase-bom:34.3.0')
-        //id 'com.google.gms.google-services' version '4.4.3' apply false
-
-
-        // TODO: Add the dependencies for Firebase products you want to use
-        // When using the BoM, don't specify versions in Firebase dependencies
-        // https://firebase.google.com/docs/android/setup#available-libraries
     }
 
     buildTypes {
@@ -52,6 +41,13 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+}
+
+dependencies {
+    implementation(platform("com.google.firebase:firebase-bom:34.3.0"))
+    // Agrega aquí tus dependencias Firebase, por ejemplo:
+    // implementation("com.google.firebase:firebase-auth")
+    // implementation("com.google.firebase:firebase-firestore")
 }
 
 flutter {
