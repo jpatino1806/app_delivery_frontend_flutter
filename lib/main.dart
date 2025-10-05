@@ -1,3 +1,4 @@
+import 'package:delivery_flutter/src/pages/client/update/client_update_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:delivery_flutter/src/pages/client/products/list/client_products_list_page.dart';
@@ -38,6 +39,7 @@ class _MyAppState extends State<MyApp> {
         'register': (context) => RegisterPage(),
         'roles': (context) => RolesPage(),
         'client/products/list': (context) => ClientProductsListPage(),
+        'client/update': (context) => ClientUpdatePage(),
         'restaurant/orders/list': (context) => RestaurantOrdersListPage(),
         'delivery/orders/list': (context) => DeliveryOrdersListPage(),
       },
