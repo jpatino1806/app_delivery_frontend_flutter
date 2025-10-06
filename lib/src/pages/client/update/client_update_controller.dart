@@ -39,9 +39,9 @@ class ClientUpdateController {
   Future? init(BuildContext context, Function refresh) async{
     this.context = context;
     this.refresh = refresh;
-    usersProvider.init(context);
     _progressDialog = ProgressDialog(context: context);
     user = User.fromJson(await _sharedPref.read('user'));
+    usersProvider.init(context, token: user?.sesionToken);
     nameController.text = user!.name!;
     lastnameController.text = user!.lastname!;
     phoneController.text = user!.phone!;
@@ -63,10 +63,10 @@ class ClientUpdateController {
       return;
     }
     
-    if (imageFile == null) {
-      MySnackbar.show(context!, 'Selecciona una imagen');
-      return;
-    }
+    // if (imageFile == null) {
+    //   MySnackbar.show(context!, 'Selecciona una imagen');
+    //   return;
+    // }
 
     _progressDialog?.show(max: 100, msg: 'espere un momento...');
     isEnable = false;
@@ -76,13 +76,23 @@ class ClientUpdateController {
       name: name, 
       lastname: lastname, 
       phone: phone, 
+      image: user?.image
       
     );
 
-    Stream? stream = await usersProvider.update(myUser, imageFile!);
+    //Stream? stream = await usersProvider.update(myUser, imageFile!);
+    Stream? stream;
+
+    if (imageFile != null) {
+    stream = await usersProvider.update(myUser, imageFile!);
+    } else {
+    stream = await usersProvider.updateNoImage(myUser);
+    }
+
+    
     stream?.listen((res) async {
 
-      _progressDialog?.close();
+    _progressDialog?.close();
 
     //ResponseApi? responseApi = await usersProvider.create(user);
     ResponseApi? responseApi = ResponseApi.fromJson(json.decode(res));
@@ -91,6 +101,7 @@ class ClientUpdateController {
       if (responseApi.success == true) {
 
         user = await usersProvider.getById(myUser.id!); //obteniendo usuario de la base de datos
+        print('usuario obtenido: ${user?.toJson()}');
         _sharedPref.save('user', user?.toJson());
         
         Navigator.pushNamedAndRemoveUntil(context!, 'client/products/list', (route) => false);

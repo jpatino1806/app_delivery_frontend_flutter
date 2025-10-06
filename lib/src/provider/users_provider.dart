@@ -4,7 +4,9 @@ import 'dart:io';
 import 'package:delivery_flutter/src/api/environment.dart';
 import 'package:delivery_flutter/src/models/response_api.dart';
 import 'package:delivery_flutter/src/models/user.dart';
+import 'package:delivery_flutter/src/utils/shared_pref.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 
@@ -15,9 +17,11 @@ import 'package:path/path.dart';
     final String _api = '/api/users';
 
     BuildContext? context;
+    String? token;
 
-    Future? init(BuildContext context){
+    Future? init(BuildContext context, {String ?token}) async{
       this.context = context;
+      this.token = token;
       return null;
     }
 
@@ -27,9 +31,17 @@ import 'package:path/path.dart';
       try {
         Uri url = Uri.http(_url, '$_api/findById/$id');
         Map<String, String> headers = {
-          'Content-type': 'application/json'
+          'Content-type': 'application/json',
+          'Authorization': ?token
         };
         final res = await http.get(url, headers: headers);
+
+        if(res.statusCode == 401){
+          Fluttertoast.showToast(msg: 'Tu sesion expiro');
+          SharedPref().logout(context!);
+        }
+
+
         final data = json.decode(res.body);
         User user = User.fromJson(data);
         return user;
@@ -72,6 +84,7 @@ import 'package:path/path.dart';
       try {
         Uri url = Uri.http(_url, '$_api/update');
         final request = http.MultipartRequest('PUT', url);
+        request.headers['Authorization'] = token!;
 
         //if (image != null) {
         request.files.add(http.MultipartFile(
@@ -83,14 +96,42 @@ import 'package:path/path.dart';
         //}
         request.fields['user'] = json.encode(user);
         final response = await request.send();
+
+        if (response.statusCode == 401) {
+          Fluttertoast.showToast(msg: 'Tu sesion expiro');
+          SharedPref().logout(context!);
+        }
         return response.stream.transform(utf8.decoder);
 
       } 
       catch (e) {
         print('Error: $e');
-        //return null;
+        return null;
       }
     }
+
+    //////////////////////////////////////////////////////////////////
+    
+    Future<Stream?> updateNoImage(User user) async {
+      try {
+        Uri uri = Uri.http(_url, '$_api/updateWithoutImage'); // endpoint en tu backend
+        Map<String, String> headers = {
+          'Content-Type': 'application/json',
+        };
+
+        final body = json.encode(user.toJson());
+        final request = http.Request('PUT', uri);
+        request.headers.addAll(headers);
+        request.body = body;
+
+        final response = await request.send();
+        return response.stream.transform(utf8.decoder);
+      } catch (e) {
+        print('Error en update sin imagen: $e');
+        return null;
+      }
+    }
+
 
 
     ///////////////////////////////////////////////////////////////////
@@ -115,6 +156,7 @@ import 'package:path/path.dart';
     }
 
     //////////////////////////////////////////////////////////////////
+    
     Future<ResponseApi?> login(String email, String password) async{
       try {
         Uri url = Uri.http(_url, '$_api/login');
