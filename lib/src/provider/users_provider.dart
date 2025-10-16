@@ -17,11 +17,12 @@ import 'package:path/path.dart';
     final String _api = '/api/users';
 
     BuildContext? context;
-    String? token;
+    //String? token;
+    User? sessionUser;
 
-    Future? init(BuildContext context, {String ?token}) async{
+    Future? init(BuildContext context, {User? sessionUser}) {
       this.context = context;
-      this.token = token;
+      this.sessionUser = sessionUser;
       return null;
     }
 
@@ -32,13 +33,13 @@ import 'package:path/path.dart';
         Uri url = Uri.http(_url, '$_api/findById/$id');
         Map<String, String> headers = {
           'Content-type': 'application/json',
-          'Authorization': ?token
+          'Authorization': ?sessionUser?.sesionToken
         };
         final res = await http.get(url, headers: headers);
 
         if(res.statusCode == 401){
           Fluttertoast.showToast(msg: 'Tu sesion expiro');
-          SharedPref().logout(context!);
+          SharedPref().logout(context!, sessionUser!.id!);
         }
 
 
@@ -84,7 +85,7 @@ import 'package:path/path.dart';
       try {
         Uri url = Uri.http(_url, '$_api/update');
         final request = http.MultipartRequest('PUT', url);
-        request.headers['Authorization'] = token!;
+        request.headers['Authorization'] = sessionUser!.sesionToken!;
 
         //if (image != null) {
         request.files.add(http.MultipartFile(
@@ -99,7 +100,7 @@ import 'package:path/path.dart';
 
         if (response.statusCode == 401) {
           Fluttertoast.showToast(msg: 'Tu sesion expiro');
-          SharedPref().logout(context!);
+          SharedPref().logout(context!, sessionUser!.id!);
         }
         return response.stream.transform(utf8.decoder);
 
@@ -141,6 +142,28 @@ import 'package:path/path.dart';
       try {
         Uri url = Uri.http(_url, '$_api/create');
         String bodyParams = json.encode(user);
+        Map<String, String> headers = {
+          'Content-type': 'application/json'
+        };
+        final response = await http.post(url, headers: headers, body: bodyParams);
+        final data = json.decode(response.body);
+        ResponseApi responseApi = ResponseApi.fromJson(data);
+        return responseApi;
+      } catch (e) {
+        //print('Error: $e');
+        return null;
+      }
+
+    }
+
+    //////////////////////////////////////////////////////////////////
+    
+    Future<ResponseApi?> logout(String idUser) async {
+      try {
+        Uri url = Uri.http(_url, '$_api/logout');
+        String bodyParams = json.encode({
+          'id': idUser
+        });
         Map<String, String> headers = {
           'Content-type': 'application/json'
         };

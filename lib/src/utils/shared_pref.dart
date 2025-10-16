@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 //import 'package:delivery_flutter/src/models/user.dart';
+import 'package:delivery_flutter/src/provider/users_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,19 +35,22 @@ class SharedPref{
   }
 
   
-  void logout(BuildContext context) async{
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('user');
+  // void logout(BuildContext context) async{
+
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.remove('user');
+    
+  //   Navigator.pushNamedAndRemoveUntil(context, 'login', (route) => false);
+  // }
+
+   void logout(BuildContext context, String idUser) async{
+
+    UsersProvider usersProvider = UsersProvider();
+    usersProvider.init(context);
+    await usersProvider.logout(idUser);
+    await remove('user');
     
     Navigator.pushNamedAndRemoveUntil(context, 'login', (route) => false);
-    //Navigator.of(context).pushNamedAndRemoveUntil('login', (route) => false);
   }
-
-  // Future<void> logout(BuildContext context) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   await prefs.remove('user'); // Limpia todos los datos guardados
-  //   Navigator.of(context).pushNamedAndRemoveUntil('login', (route) => false); // Limpia el stack y navega a login
-  // }
-  
   
 }

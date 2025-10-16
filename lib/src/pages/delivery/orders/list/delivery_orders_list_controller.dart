@@ -22,7 +22,7 @@ class DeliveryOrdersListController {
   }
 
   logout(BuildContext context){ 
-    _sharedPref.logout(context);
+    _sharedPref.logout(context, user!.id!);
   }
 
   openDrawer(){

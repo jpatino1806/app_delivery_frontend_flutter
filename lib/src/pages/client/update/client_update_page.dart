@@ -28,7 +28,6 @@ class _ClientUpdatePageState extends State<ClientUpdatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Editar perfil',
-        //style: TextStyle(color: Colors.white),
       ),
       backgroundColor: MyColors.primaryColor,
       foregroundColor: Colors.white,

@@ -41,7 +41,7 @@ class ClientUpdateController {
     this.refresh = refresh;
     _progressDialog = ProgressDialog(context: context);
     user = User.fromJson(await _sharedPref.read('user'));
-    usersProvider.init(context, token: user?.sesionToken);
+    usersProvider.init(context, sessionUser: user);
     nameController.text = user!.name!;
     lastnameController.text = user!.lastname!;
     phoneController.text = user!.phone!;

@@ -23,7 +23,7 @@ class ClientProductsListController {
   }
 
   void logout(BuildContext context){ 
-    _sharedPref.logout(context);
+    _sharedPref.logout(context, user!.id!);
   }
 
   void openDrawer(){

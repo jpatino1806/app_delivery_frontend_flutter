@@ -23,7 +23,11 @@ class RestaurantOrdersListController {
   }
 
   logout(BuildContext context){ 
-    _sharedPref.logout(context);
+    _sharedPref.logout(context, user!.id!);
+  }
+
+  void goToCategoryCreate(){
+    Navigator.pushNamed(context!, 'restaurant/categories/create');
   }
 
   openDrawer(){

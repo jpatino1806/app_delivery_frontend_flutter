@@ -106,7 +106,12 @@ class _RestaurantOrdersListPageState extends State<RestaurantOrdersListPage> {
               ],
             ),
           ),
-           
+          ListTile(
+            onTap: () => _con.goToCategoryCreate(),
+            title: Text('Crear categoria'),
+            trailing: Icon(Icons.list_alt),
+          ),
+
           _con.user != null ?
           _con.user!.roles.length > 1 ?
           ListTile(
@@ -118,7 +123,7 @@ class _RestaurantOrdersListPageState extends State<RestaurantOrdersListPage> {
             onTap: () => _con.logout(context),
             title: Text('Cerrar sesion'),
             trailing: Icon(Icons.power_settings_new),
-          )
+          ),
           ],
         ),
       );
