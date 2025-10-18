@@ -20,7 +20,7 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _con.init(context, refresh);
-      //_con.init(context, refresh);
+      
     });
   }
 
@@ -32,6 +32,8 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
         backgroundColor: MyColors.primaryColor,
         leading: _menuDrawer(),
       ),
+      body: Center(child: Text(
+        'CLIENT\n PAGE', style: TextStyle(fontSize: 40, color: MyColors.primaryColor),),),
       drawer: _drawer(),
       
     );
@@ -102,7 +104,7 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
             ),
           ),
           ListTile(
-            onTap: _con.goToUpdatePage,
+            onTap: () => _con.goToUpdatePage(context),
             title: Text('Editar perfil'),
             trailing: Icon(Icons.edit_outlined),
           ),
@@ -113,7 +115,7 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
           _con.user != null ?
           _con.user!.roles.length > 1 ?
            ListTile(
-            onTap: () => _con.goToRoles(),
+            onTap: () => _con.goToRoles(context),
             title: Text('Seleccionar rol'),
             trailing: Icon(Icons.person_outline),
           ) : Container() : Container(),

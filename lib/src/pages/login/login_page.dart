@@ -44,10 +44,6 @@ class _LoginPageState extends State<LoginPage> {
               child: Container(
                 width: 150,
                 height: 150,
-                // decoration: BoxDecoration(
-                //   borderRadius: BorderRadius.circular(130),
-                //   color: Colors.black26
-                // ),
                 child: Image.asset('assets/img/wie_1024_sin_fondo.png'),
               ),
             ),  

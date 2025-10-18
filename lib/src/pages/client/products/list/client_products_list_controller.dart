@@ -30,13 +30,13 @@ class ClientProductsListController {
      key.currentState?.openDrawer();
   }
 
-  void goToUpdatePage() {
-    Navigator.pushNamed(context!, 'client/update');
+  goToUpdatePage(BuildContext context) {
+    Navigator.pushNamed(context, 'client/update');
   }
 
 
-  void goToRoles(){
-    Navigator.pushNamedAndRemoveUntil(context!, 'roles', (route) => false);
+  void goToRoles(BuildContext context){
+    Navigator.pushNamedAndRemoveUntil(context, 'roles', (route) => false);
   }
 
 

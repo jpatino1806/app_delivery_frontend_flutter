@@ -43,7 +43,8 @@ dependencies:
   path: ^1.9.1
   sn_progress_dialog: ^1.2.0
   fluttertoast: ^9.0.0
-
+  flutter_masked_text2: ^0.9.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

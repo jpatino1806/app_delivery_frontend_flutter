@@ -32,13 +32,10 @@ final DeliveryOrdersListController _con = DeliveryOrdersListController();
         backgroundColor: MyColors.primaryColor,
         leading: _menuDrawer(),
       ),
+      body: Center(child: Text(
+        'DELIVERY\n PAGE', style: TextStyle(fontSize: 40, color: MyColors.primaryColor),),),
       drawer: _drawer(),
-      // body: Center(
-      //   child: ElevatedButton(
-      //     onPressed: () => _con.logout(context), 
-      //     child: Text('Cerrar Sesion'),
-      //   ),
-      // )
+      
     );
   }
 

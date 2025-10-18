@@ -31,13 +31,10 @@ class _RestaurantOrdersListPageState extends State<RestaurantOrdersListPage> {
         backgroundColor: MyColors.primaryColor,
         leading: _menuDrawer(),
       ),
+      body: Center(child: Text(
+        'RESTAURANT\n PAGE', style: TextStyle(fontSize: 40, color: MyColors.primaryColor),),),
       drawer: _drawer(),
-      // body: Center(
-      //   child: ElevatedButton(
-      //     onPressed: () => _con.logout(context), 
-      //     child: Text('Cerrar Sesion'),
-      //   ),
-      // )
+      
     );
   }
 
@@ -110,6 +107,12 @@ class _RestaurantOrdersListPageState extends State<RestaurantOrdersListPage> {
             onTap: () => _con.goToCategoryCreate(),
             title: Text('Crear categoria'),
             trailing: Icon(Icons.list_alt),
+          ),
+
+          ListTile(
+            onTap: () => _con.goToProductCreate(),
+            title: Text('Crear producto'),
+            trailing: Icon(Icons.local_pizza),
           ),
 
           _con.user != null ?
