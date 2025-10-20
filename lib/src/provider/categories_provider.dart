@@ -48,7 +48,6 @@ class CategoriesProvider {
 
 
   Future<ResponseApi?> create(Category category) async {
-      
     try {
       Uri url = Uri.http(_url, '$_api/create');
       String bodyParams = json.encode(category);
