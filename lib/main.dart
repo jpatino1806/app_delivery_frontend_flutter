@@ -1,3 +1,4 @@
+import 'package:delivery_flutter/src/pages/client/order/create/client_order_create_page.dart';
 import 'package:delivery_flutter/src/pages/client/update/client_update_page.dart';
 import 'package:delivery_flutter/src/pages/restaurant/categories/create/restaurant_categories_create_page.dart';
 import 'package:delivery_flutter/src/pages/restaurant/products/create/restaurant_products_create_page.dart';
@@ -42,6 +43,7 @@ class _MyAppState extends State<MyApp> {
         'roles': (context) => RolesPage(),
         'client/products/list': (context) => ClientProductsListPage(),
         'client/update': (context) => ClientUpdatePage(),
+        'client/order/create': (context) => ClientOrderCreatePage(),
         'restaurant/orders/list': (context) => RestaurantOrdersListPage(),
         'restaurant/categories/create': (context) => RestaurantCategoriesCreatePage(),
         'restaurant/products/create': (context) => RestaurantProductsCreatePage(),

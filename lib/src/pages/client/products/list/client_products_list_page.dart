@@ -27,6 +27,13 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
     });
   }
 
+
+  void refresh(){
+    setState(() {});
+  }
+
+  
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -97,9 +104,12 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
   }
 
 
+
   Widget _cardproduct(Product product){
     return GestureDetector(
-      onTap: _con.openBottomSheet,
+      onTap: () {
+        _con.openBottomSheet(product);
+      },
       child: SizedBox(
         height: 250,
         child: Card(
@@ -175,27 +185,30 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
 
 
   Widget _shoppingBag(){
-    return Stack(
-      children: [
-        Container(
-          margin: EdgeInsets.only(right: 15),
-          child: Icon(
-            Icons.shopping_bag_outlined,
-            color: Colors.black,
-          ),
-        ),
-        Positioned(
-          right: 16,
-          child: Container(
-            width: 9,
-            height: 9,
-            decoration: BoxDecoration(
-              color: Colors.green,
-              borderRadius: BorderRadius.all(Radius.circular(30))
+    return GestureDetector(
+      onTap: _con.goToOrderCreatePage,
+      child: Stack(
+        children: [
+          Container(
+            margin: EdgeInsets.only(right: 15),
+            child: Icon(
+              Icons.shopping_bag_outlined,
+              color: Colors.black,
             ),
+          ),
+          Positioned(
+            right: 16,
+            child: Container(
+              width: 9,
+              height: 9,
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.all(Radius.circular(30))
+              ),
+            )
           )
-        )
-      ],
+        ],
+      ),
     );
   }
 
@@ -318,10 +331,7 @@ class _ClientProductsListPageState extends State<ClientProductsListPage> {
     );
   }
 
-  void refresh(){
-    setState(() {},);
-  }
-
+ 
 
 
 }
